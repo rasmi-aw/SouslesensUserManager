@@ -1,4 +1,4 @@
-package fr.enit.industryportal.souslesensusermanager.model.requests;
+package fr.enit.industryportal.souslesensusermanager.model.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -18,33 +18,40 @@ public class User {
 
     @Getter
     @Setter
+    @JsonProperty("login")
     private String username;
 
     @Getter
     @Setter
-    private String email;
+    @JsonProperty("id")
+    private String id = username;
 
     @Getter
     @Setter
-    @JsonProperty(value = "role")
-    private List<String> roles;
+    @JsonProperty("_type")
+    private String type;
 
     @Getter
     @Setter
-    @JsonProperty(value = "@id")
-    private String id;
+    private List<String> rolesInPortal;
 
     @Getter
     @Setter
-    private String apikey;
+    private List<String> groups;
+
+    @Getter
+    @Setter
+    private String source;
 
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
                 ", id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", rolesInPortal=" + rolesInPortal +
+                ", groups=" + groups +
+                ", source='" + source + '\'' +
                 '}';
     }
 }

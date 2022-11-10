@@ -1,11 +1,9 @@
 package fr.enit.industryportal.souslesensusermanager.helpers;
 
 import fr.enit.industryportal.souslesensusermanager.config.Config;
-import fr.enit.industryportal.souslesensusermanager.model.requests.User;
+import fr.enit.industryportal.souslesensusermanager.model.requests.PortalUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,7 +18,6 @@ public interface UserHelper {
     /**
      * Queries the portal api to check of this user exist
      */
-    @GetMapping("/users/{username}")
-    List<User> getUser(@PathVariable String username,
-                       @RequestParam String apikey);
+    @GetMapping("/users?apikey=" + Config.API_KEY)
+    List<PortalUser> getUsers();
 }

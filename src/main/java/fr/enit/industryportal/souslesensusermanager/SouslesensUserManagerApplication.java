@@ -1,6 +1,7 @@
 package fr.enit.industryportal.souslesensusermanager;
 
 import fr.enit.industryportal.souslesensusermanager.helpers.UserHelper;
+import fr.enit.industryportal.souslesensusermanager.jobs.UsersJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,8 @@ public class SouslesensUserManagerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(userHelper.getUsers());
+
+        UsersJob.updateFile(userHelper);
     }
 
 }

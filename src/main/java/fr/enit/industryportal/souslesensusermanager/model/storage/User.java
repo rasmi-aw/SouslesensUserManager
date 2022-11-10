@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author Abdelwadoud Rasmi
- * Request model
+ * To be stored on db
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,13 +18,19 @@ public class User {
 
     @Getter
     @Setter
-    @JsonProperty("login")
-    private String username;
+    private String login;
 
     @Getter
     @Setter
-    @JsonProperty("id")
-    private String id = username;
+    private String name;
+
+    @Getter
+    @Setter
+    private String id = login;
+
+    @Getter
+    @Setter
+    private String password;
 
     @Getter
     @Setter
@@ -46,8 +52,10 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "login='" + login + '\'' +
+                ", name='" + name + '\'' +
                 ", id='" + id + '\'' +
+                ", password='" + password + '\'' +
                 ", type='" + type + '\'' +
                 ", rolesInPortal=" + rolesInPortal +
                 ", groups=" + groups +

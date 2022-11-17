@@ -15,20 +15,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class SouslesensUserManagerApplication extends ServletInitializer implements CommandLineRunner {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserHelper userHelper;
-
     public static void main(String[] args) {
         SpringApplication.run(SouslesensUserManagerApplication.class, args);
     }
 
     @Override
     public void run(String... args) {
-        //
-        UsersJob.update(userHelper, userRepository);
     }
 
 }

@@ -6,7 +6,6 @@ import fr.enit.industryportal.souslesensusermanager.model.entities.User;
 import fr.enit.industryportal.souslesensusermanager.model.entities.repose.UserRepository;
 import fr.enit.industryportal.souslesensusermanager.model.requests.PortalUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

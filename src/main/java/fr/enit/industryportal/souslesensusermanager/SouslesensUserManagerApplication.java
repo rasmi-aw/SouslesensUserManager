@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients
 @SpringBootApplication
 @EnableScheduling
-public class SouslesensUserManagerApplication implements CommandLineRunner {
+public class SouslesensUserManagerApplication extends ServletInitializer implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;

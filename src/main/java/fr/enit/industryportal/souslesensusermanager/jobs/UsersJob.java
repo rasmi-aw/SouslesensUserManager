@@ -1,61 +1,52 @@
 package fr.enit.industryportal.souslesensusermanager.jobs;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import fr.enit.industryportal.souslesensusermanager.config.Config;
 import fr.enit.industryportal.souslesensusermanager.helpers.UserHelper;
+import fr.enit.industryportal.souslesensusermanager.model.entities.User;
+import fr.enit.industryportal.souslesensusermanager.model.entities.repose.UserRepository;
 import fr.enit.industryportal.souslesensusermanager.model.requests.PortalUser;
-import fr.enit.industryportal.souslesensusermanager.model.storage.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author Abdelwadoud Rasmi
  * A job to update users from ontoportal
  */
+@Component
 public class UsersJob implements Job {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserHelper userHelper;
 
     @Override
-    @Scheduled(cron = EVERY_DAY_MIDNIGHT)
+    @Scheduled(fixedDelay = HOUR)
     public void execute() {
-
+        //Execute this code every Hour
+        System.out.println("Update at: '" + new Date() + "'");
+        update(userHelper, userRepository);
     }
 
-    public static void updateFile(UserHelper userHelper) {
-        Gson gson = new Gson();
-        ObjectMapper mapper = new ObjectMapper();
+    public static void update(UserHelper userHelper, UserRepository userRepository) {
         try {
-            //Reading users from the users.json file
-            String json = new String(Files.readAllBytes(new File(Config.USERS_FILE).toPath()));
-            JsonObject jo = new JsonParser().parse(json).getAsJsonObject();
-            // getting users from the portal through an http call
+            //Fetch portal users with an HTTP call
             List<PortalUser> portalUsers = userHelper.getUsers();
             portalUsers.forEach(puser -> {
+                String password = userRepository.getUserPassword(puser.getId());
                 User user = User.from(puser);
+                //prevent password changing
+                if (password != null)
+                    user.setPassword(password);
                 // case of a new user
-                if (!json.contains(user.getName())) {
-                    try {
-                        jo.add(user.getId(), new JsonParser().parse(mapper.writeValueAsString(user)).getAsJsonObject());
-                    } catch (JsonProcessingException e) {
-                       e.printStackTrace();
-                    }
-                }
-
+                userRepository.save(user);
             });
-            //
-            System.out.println(jo.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

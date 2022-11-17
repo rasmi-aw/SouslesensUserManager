@@ -1,4 +1,4 @@
-package fr.enit.industryportal.souslesensusermanager.model.storage;
+package fr.enit.industryportal.souslesensusermanager.model.entities;
 
 import fr.enit.industryportal.souslesensusermanager.model.requests.PortalUser;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Abdelwadoud Rasmi
@@ -17,7 +18,13 @@ import java.util.Set;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class User {
+
+    @Getter
+    @Setter
+    @Id
+    private String id;
 
     @Getter
     @Setter
@@ -29,10 +36,6 @@ public class User {
 
     @Getter
     @Setter
-    private String id;
-
-    @Getter
-    @Setter
     private String password;
 
     @Getter
@@ -41,27 +44,28 @@ public class User {
 
     @Getter
     @Setter
-    private List<String> rolesInPortal;
+    private String rolesInPortal;
 
     @Getter
     @Setter
-    private List<String> groups;
+    private String groups;
 
     @Getter
     @Setter
     private String source;
 
     public static User from(PortalUser user) {
+
         if (user == null)
             return null;
-        return new User(user.getUsername(),
+        return new User(user.getId(),
                 user.getUsername(),
-                user.getId(),
+                user.getUsername(),
                 user.getEmail(),
                 "_user",
-                user.getRoles(),
-                Arrays.asList(new String[]{"ontoportal_users"}),
-                "json");
+                user.getRoles().stream().map(s -> s.trim()).collect(Collectors.joining(",")),
+                "ontoportal_users",
+                "database");
     }
 
     @Override
@@ -71,9 +75,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 ", password='" + password + '\'' +
-                ", type='" + _type + '\'' +
-                ", rolesInPortal=" + rolesInPortal +
-                ", groups=" + groups +
+                ", _type='" + _type + '\'' +
+                ", rolesInPortal='" + rolesInPortal + '\'' +
+                ", groups='" + groups + '\'' +
                 ", source='" + source + '\'' +
                 '}';
     }

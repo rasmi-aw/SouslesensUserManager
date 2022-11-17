@@ -10,7 +10,7 @@
     </parent>
     <groupId>fr.enit.industryportal</groupId>
     <artifactId>SouslesensUserManager</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>war</packaging>
     <name>SouslesensUserManager</name>
     <description>SouslesensUserManager</description>

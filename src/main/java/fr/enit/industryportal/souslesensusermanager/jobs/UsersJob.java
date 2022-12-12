@@ -39,7 +39,7 @@ public class UsersJob implements Job {
             List<PortalUser> portalUsers = userHelper.getUsers();
             portalUsers.forEach(puser -> {
                 String password = userRepository.getUserPassword(puser.getId());
-                String groups = userRepository.getUserGroups(puser.getId())
+                String groups = userRepository.getUserGroups(puser.getId());
                 User user = User.from(puser);
                 //prevent password changing
                 if (password != null)

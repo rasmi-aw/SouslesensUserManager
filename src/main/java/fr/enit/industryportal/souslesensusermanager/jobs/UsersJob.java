@@ -39,10 +39,14 @@ public class UsersJob implements Job {
             List<PortalUser> portalUsers = userHelper.getUsers();
             portalUsers.forEach(puser -> {
                 String password = userRepository.getUserPassword(puser.getId());
+                String groups = userRepository.getUserGroups(puser.getId())
                 User user = User.from(puser);
                 //prevent password changing
                 if (password != null)
                     user.setPassword(password);
+                // prevent groups changing except from souslesens ui or config files
+                if (groups != null)
+                    user.setGroups(groups);
                 // case of a new user
                 userRepository.save(user);
             });

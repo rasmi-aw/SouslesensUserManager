@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("SELECT password FROM User WHERE id = :id")
     String getUserPassword(String id);
+
+    @Query("SELECT groups FROM User WHERE id = :id")
+    String getUserGroups(String id);
 }

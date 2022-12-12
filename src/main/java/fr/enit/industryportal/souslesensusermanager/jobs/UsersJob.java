@@ -26,7 +26,7 @@ public class UsersJob implements Job {
     private UserHelper userHelper;
 
     @Override
-    @Scheduled(fixedDelay = HOUR)
+    @Scheduled(fixedDelay = 5 * MINUTE)
     public void execute() {
         //Execute this code every Hour
         System.out.println("Update at: '" + new Date() + "'");
